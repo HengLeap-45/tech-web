@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shop tech — NovaTech</title>
+    <link rel="stylesheet" href="src/tech.css" />
+  </head>
+  <body>
+    <div class="notice">
+      Free express delivery on orders over $75 · 30-day returns
+    </div>
+    <header class="wrap top">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a href="shop.html">Shop</a
+        ><a href="index.html#categories">Categories</a
+        ><a href="index.html#discover">Discover</a>
+      </nav>
+      <a class="logo" href="index.html">NOVA<i>TECH</i></a>
+      <div class="actions">
+        <a href="contact.html">Support</a
+        ><a class="bag" href="#">Bag <span class="bubble">0</span></a>
+      </div>
+    </header>
+    <section class="page-head">
+      <div class="wrap">
+        <div class="eyebrow">All systems go</div>
+        <h1>Explore the gear.</h1>
+        <p>
+          Performance essentials engineered for your desk, commute, home, and
+          every in-between.
+        </p>
+      </div>
+    </section>
+    <main class="wrap shop-layout">
+      <aside class="filters">
+        <div class="filter">
+          <h3>Category</h3>
+          <label><input type="checkbox" checked /> All products</label
+          ><label><input type="checkbox" /> Laptops & tablets</label
+          ><label><input type="checkbox" /> Audio</label
+          ><label><input type="checkbox" /> Smart home</label
+          ><label><input type="checkbox" /> Accessories</label>
+        </div>
+        <div class="filter">
+          <h3>Price</h3>
+          <label><input type="checkbox" /> Under $100</label
+          ><label><input type="checkbox" /> $100 — $500</label
+          ><label><input type="checkbox" /> Over $500</label>
+        </div>
+        <div class="filter">
+          <h3>Sort by</h3>
+          <select class="sort">
+            <option>Featured</option>
+            <option>Newest</option>
+            <option>Price: low to high</option>
+          </select>
+        </div>
+      </aside>
+      <section>
+        <div class="shop-top">
+          <span>32 products</span><span>Showing all</span>
+        </div>
+        <div class="product-grid" id="grid"></div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div>
+            <a class="logo" href="index.html">NOVA<i>TECH</i></a>
+            <p>Sharper tools for the way you live, work, and play.</p>
+          </div>
+          <div>
+            <h4>Shop</h4>
+            <a href="shop.html">Laptops & tablets</a
+            ><a href="shop.html">Audio</a>
+          </div>
+          <div>
+            <h4>Help</h4>
+            <a href="contact.html">Contact support</a
+            ><a href="contact.html">Warranty</a>
+          </div>
+          <div>
+            <h4>Stay connected</h4>
+            <a href="contact.html">Subscribe →</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 NOVATECH</span><span>PRIVACY · TERMS · INSTAGRAM</span>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const p = [
+        ["New", "ASUS ROG Strix G17", "$1,199.00", "assets/images/asus-rog.jpg"],
+        [
+          "Best seller",
+          "MSI Katana 17 HX",
+          "$249.00",
+          "assets/images/asus-rog.jpg",
+        ],
+        [
+          "New",
+          "ASUS ROG Zephyrus G16",
+          "$149.00",
+          "assets/images/asus-rog.jpg",
+        ],
+        ["", "MSI Stealth 16 AI Studio", "$1,599.00", "assets/images/msi-gaming.jpg"],
+        ["", "ASUS TUF Gaming A15", "$69.00", "assets/images/asus-rog.jpg"],
+        ["Sale", "MSI Raider 18 HX", "$479.00", "assets/images/asus-rog.jpg"],
+        ["", "ASUS ROG Flow X16", "$129.00", "assets/images/asus-rog.jpg"],
+        ["", "MSI Cyborg 15", "$79.00", "assets/images/asus-rog.jpg"],
+      ];
+      grid.innerHTML = p
+        .map(
+          (x, i) =>
+            `<article class="product" onclick="location.href='product.html?id=${i % 4}'"><div class="product-image">${x[0] ? `<span class="label">${x[0]}</span>` : ""}<button class="heart" onclick="event.stopPropagation();this.textContent=this.textContent==='♡'?'♥':'♡'">♡</button><img src="${x[3]}" alt="${x[1]}"></div><div class="p-info"><span class="stars">★★★★★</span><h3>${x[1]}</h3><span class="price">${x[2]}</span></div></article>`,
+        )
+        .join("");
+    </script>
+      <script src="src/navbar.js"></script>
+  </body>
+</html>

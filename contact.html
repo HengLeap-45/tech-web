@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Support — NovaTech</title>
+    <link rel="stylesheet" href="src/tech.css" />
+  </head>
+  <body>
+    <div class="notice">
+      Free express delivery on orders over $75 · 30-day returns
+    </div>
+    <header class="wrap top">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a href="shop.html">Shop</a
+        ><a href="index.html#categories">Categories</a
+        ><a href="index.html#discover">Discover</a>
+      </nav>
+      <a class="logo" href="index.html">NOVA<i>TECH</i></a>
+      <div class="actions">
+        <a href="contact.html">Support</a
+        ><a class="bag" href="#">Bag <span class="bubble">0</span></a>
+      </div>
+    </header>
+    <section class="page-head">
+      <div class="wrap">
+        <div class="eyebrow">Human help, real answers</div>
+        <h1>Talk to our tech team.</h1>
+        <p>
+          Need help choosing, setting up, or getting more from your gear? We’re
+          ready when you are.
+        </p>
+      </div>
+    </section>
+    <main class="wrap contact">
+      <aside class="aside">
+        <div class="eyebrow">Support centre</div>
+        <h2>Good tech deserves great support.</h2>
+        <p>
+          Send us a note for help with orders, product advice, warranty
+          questions, or troubleshooting. Our team replies within one business
+          day.
+        </p>
+        <div class="contact-item">
+          <b>Email support</b
+          ><a href="mailto:hello@novatech.com">hello@novatech.com</a>
+        </div>
+        <div class="contact-item">
+          <b>Call us</b
+          ><span>+1 800 555 0147<br />Mon — Fri, 8am — 6pm EST</span>
+        </div>
+        <div class="contact-item">
+          <b>Visit</b><span>88 Mercer Street<br />New York, NY 10012</span>
+        </div>
+      </aside>
+      <section class="form">
+        <div class="eyebrow">Send a request</div>
+        <h2>What can we solve?</h2>
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="field">
+              <label for="fullName">Your name</label
+              ><input id="fullName" required placeholder="Alex Morgan" />
+            </div>
+            <div class="field">
+              <label for="email">Email address</label
+              ><input
+                id="email"
+                type="email"
+                required
+                placeholder="alex@example.com"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <label for="topic">Topic</label
+            ><select id="topic">
+              <option>Product recommendation</option>
+              <option>Order help</option>
+              <option>Technical support</option>
+              <option>Warranty & returns</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="note">How can we help?</label
+            ><textarea
+              id="note"
+              required
+              placeholder="Tell us a little about what you need..."
+            ></textarea>
+          </div>
+          <button class="button" type="submit">Send request →</button>
+          <div class="sent" id="sent">
+            Request received. A NovaTech specialist will be in touch soon.
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div>
+            <a class="logo" href="index.html">NOVA<i>TECH</i></a>
+            <p>Sharper tools for the way you live, work, and play.</p>
+          </div>
+          <div>
+            <h4>Shop</h4>
+            <a href="shop.html">Laptops & tablets</a
+            ><a href="shop.html">Audio</a>
+          </div>
+          <div>
+            <h4>Help</h4>
+            <a href="contact.html">Contact support</a
+            ><a href="contact.html">Warranty</a>
+          </div>
+          <div>
+            <h4>Follow</h4>
+            <a href="#">Instagram</a><a href="#">YouTube</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 NOVATECH</span><span>PRIVACY · TERMS · INSTAGRAM</span>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const f = document.getElementById("contactForm"),
+        sent = document.getElementById("sent");
+      f.addEventListener("submit", (e) => {
+        e.preventDefault();
+        sent.style.display = "block";
+        f.reset();
+      });
+    </script>
+      <script src="src/navbar.js"></script>
+  </body>
+</html>
