@@ -277,7 +277,6 @@ function displayProductDetail() {
     document.getElementById('reviewCount').textContent = `(${product.reviews} reviews)`;
     document.getElementById('productRating').textContent = '★'.repeat(Math.floor(product.rating)) + '☆';
 
-    // Fill features
     const featuresList = document.getElementById('productFeatures');
     featuresList.innerHTML = product.features.map(feature => `<li>${feature}</li>`).join('');
 
