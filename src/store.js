@@ -344,7 +344,18 @@ window.NT = (function () {
     // Use the safe read() helper instead of direct localStorage access.
     // Some mobile/private browsers throw when accessing localStorage directly,
     // which can abort the script and prevent products from rendering.
-    if (!read(KEYS.products, null)) write(KEYS.products, SEED_PRODUCTS);
+    var stored = read(KEYS.products, null);
+    if (!stored) {
+      try {
+        write(KEYS.products, SEED_PRODUCTS);
+        // Diagnostic: let the browser console show that fallback seeding occurred.
+        console.warn('NT: seeded default products (storage unavailable or empty)');
+      } catch (e) {
+        console.warn('NT: attempted to seed default products but write failed', e);
+      }
+    } else {
+      console.info('NT: products loaded from storage, count=' + (stored.length || 0));
+    }
   }
   seed();
 
