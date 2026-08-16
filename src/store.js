@@ -26,7 +26,11 @@ window.NT = (function () {
     }
   }
   function write(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      // Ignore storage errors (e.g., Safari private mode). Reads will fall back to in-memory SEED_PRODUCTS.
+    }
   }
 
   /* ---------- seed catalog ---------- */
@@ -398,7 +402,8 @@ window.NT = (function () {
 
   /* ---------- products ---------- */
   function products() {
-    return read(KEYS.products, []);
+    // If reading from storage fails or is unavailable, fall back to SEED_PRODUCTS so UI shows products.
+    return read(KEYS.products, SEED_PRODUCTS);
   }
   function saveProducts(list) {
     write(KEYS.products, list);
