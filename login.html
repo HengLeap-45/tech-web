@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sign in — NovaTech</title>
+    <link rel="stylesheet" href="src/tech.css" />
+    <link rel="stylesheet" href="src/features.css" />
+  </head>
+  <body>
+    <div class="notice">Free delivery on orders over $50 · 1 year warranty</div>
+    <header class="wrap top">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a href="shop.html">Shop</a
+        ><a href="index.html#categories">Categories</a
+        ><a href="index.html#discover">Discover</a>
+      </nav>
+      <a class="logo" href="index.html">NOVA<i>TECH</i></a>
+      <div class="actions">
+        <a href="contact.html">Support</a
+        ><a class="bag" href="cart.html">Bag <span class="bubble">0</span></a>
+      </div>
+    </header>
+    <section class="page-head compact">
+      <div class="wrap">
+        <div class="eyebrow">Your account</div>
+        <h1>Welcome back.</h1>
+        <p>Sign in to track orders, check out faster, and manage your gear.</p>
+      </div>
+    </section>
+    <main class="auth-wrap">
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" data-tab="login" type="button">Sign in</button>
+        <button class="auth-tab" data-tab="register" type="button">Create account</button>
+      </div>
+
+      <section class="auth-panel active" id="panel-login">
+        <div class="auth-card">
+          <h2>Sign in</h2>
+          <p class="sub">Enter your email and password to continue.</p>
+          <div class="auth-error" id="error"></div>
+          <form id="loginForm">
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" type="email" required placeholder="you@example.com" autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <input id="password" type="password" required placeholder="••••••••" autocomplete="current-password" />
+            </div>
+            <div class="auth-actions">
+              <button class="button" type="submit">Sign in →</button>
+            </div>
+          </form>
+          <div class="auth-hint">
+            <b>Admin demo:</b> admin@novatech.com / admin123<br />
+            New here? <a href="login.html?tab=register" class="auth-link">Create an account</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="auth-panel" id="panel-register">
+        <div class="auth-card">
+          <h2>Create account</h2>
+          <p class="sub">Join NovaTech for faster checkout and order tracking.</p>
+          <div class="auth-error" id="regError"></div>
+          <form id="registerForm">
+            <div class="field">
+              <label for="regName">Full name</label>
+              <input id="regName" required placeholder="Alex Morgan" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="regEmail">Email address</label>
+              <input id="regEmail" type="email" required placeholder="you@example.com" autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="regPassword">Password</label>
+              <input id="regPassword" type="password" required placeholder="At least 6 characters" autocomplete="new-password" />
+            </div>
+            <div class="field">
+              <label for="regConfirm">Confirm password</label>
+              <input id="regConfirm" type="password" required placeholder="Repeat password" autocomplete="new-password" />
+            </div>
+            <div class="auth-actions">
+              <button class="button" type="submit">Create account →</button>
+            </div>
+          </form>
+          <div class="auth-hint">
+            Already have an account? <a href="login.html" class="auth-link">Sign in</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-bottom">
+          <span>© 2026 NOVATECH</span><span>PRIVACY · TERMS · INSTAGRAM</span>
+        </div>
+      </div>
+    </footer>
+    <script src="src/store.js"></script>
+    <script src="src/auth.js"></script>
+    <script src="src/navbar.js"></script>
+    <script>
+      // Tab switching (respects ?tab=register)
+      document.querySelectorAll(".auth-tab").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          setTab(tab.dataset.tab);
+        });
+      });
+      function setTab(name) {
+        document.querySelectorAll(".auth-tab").forEach(function (t) {
+          t.classList.toggle("active", t.dataset.tab === name);
+        });
+        document.querySelectorAll(".auth-panel").forEach(function (p) {
+          p.classList.toggle("active", p.id === "panel-" + name);
+        });
+        history.replaceState(null, "", name === "register" ? "login.html?tab=register" : "login.html");
+      }
+      var initial = new URLSearchParams(location.search).get("tab");
+      if (initial === "register") setTab("register");
+    </script>
+  </body>
+</html>

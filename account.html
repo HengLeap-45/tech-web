@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>My account — NovaTech</title>
+    <link rel="stylesheet" href="src/tech.css" />
+    <link rel="stylesheet" href="src/features.css" />
+  </head>
+  <body>
+    <div class="notice">Free delivery on orders over $50 · 1 year warranty</div>
+    <header class="wrap top">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a href="shop.html">Shop</a
+        ><a href="index.html#categories">Categories</a
+        ><a href="index.html#discover">Discover</a>
+      </nav>
+      <a class="logo" href="index.html">NOVA<i>TECH</i></a>
+      <div class="actions">
+        <a href="contact.html">Support</a
+        ><a class="bag" href="cart.html">Bag <span class="bubble">0</span></a>
+      </div>
+    </header>
+    <section class="page-head compact">
+      <div class="wrap">
+        <div class="eyebrow">My account</div>
+        <h1>Your dashboard.</h1>
+        <p>Track orders, review your details, and manage your NovaTech gear.</p>
+      </div>
+    </section>
+    <main class="wrap dash-grid">
+      <aside class="dash-side" id="profileSide"></aside>
+      <section class="dash-main">
+        <h2>Overview</h2>
+        <p>Here is what’s happening with your orders and account.</p>
+        <div class="stat-cards" id="statCards"></div>
+        <div class="dash-section">
+          <h3>Recent orders</h3>
+          <div class="order-list" id="orderList"></div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-bottom">
+          <span>© 2026 NOVATECH</span><span>PRIVACY · TERMS · INSTAGRAM</span>
+        </div>
+      </div>
+    </footer>
+    <script src="src/store.js"></script>
+    <script src="src/navbar.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var user = NT.currentUser();
+        if (!user) {
+          location.href = "login.html?next=account.html";
+          return;
+        }
+
+        var initials = user.name.split(/\s+/).map(function (w) { return w[0]; }).slice(0, 2).join("").toUpperCase();
+        var role = user.role === "admin" ? "Administrator" : "Customer";
+        var avatarHtml = user.avatar
+          ? '<img class="dash-avatar" src="' + user.avatar + '" alt="' + NT.sanitize(user.name) + '">'
+          : '<div class="dash-avatar">' + initials + "</div>";
+
+        document.getElementById("profileSide").innerHTML =
+          avatarHtml +
+          '<button type="button" class="dash-upload" data-pick>Upload picture</button>' +
+          "<h3>" + NT.sanitize(user.name) + "</h3>" +
+          '<div class="dash-role">' + role + "</div>" +
+          "<p>" + NT.sanitize(user.email) + "</p>" +
+          '<div class="dash-menu">' +
+            '<a href="shop.html">Browse products</a>' +
+            '<a href="cart.html">View bag</a>' +
+            '<a href="contact.html">Contact support</a>' +
+            (user.role === "admin" ? '<a href="admin.html">Admin panel →</a>' : "") +
+            '<a href="#" class="buy-btn" data-logout>Sign out</a>' +
+          "</div>";
+
+        var fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = "image/*";
+        fileInput.style.display = "none";
+        document.getElementById("profileSide").appendChild(fileInput);
+
+        document.getElementById("profileSide").querySelector("[data-pick]").addEventListener("click", function () {
+          fileInput.click();
+        });
+
+        fileInput.addEventListener("change", function () {
+          var file = fileInput.files && fileInput.files[0];
+          if (!file) return;
+          if (!/^image\//.test(file.type)) {
+            NT.toast("Please choose an image file.");
+            return;
+          }
+          if (file.size > 2 * 1024 * 1024) {
+            NT.toast("Image must be under 2MB.");
+            return;
+          }
+          var reader = new FileReader();
+          reader.onload = function (ev) {
+            NT.setUserAvatar(user.id, ev.target.result);
+            NT.toast("Profile picture updated.");
+            location.reload();
+          };
+          reader.readAsDataURL(file);
+        });
+
+        document.getElementById("profileSide").querySelector("[data-logout]").addEventListener("click", function (e) {
+          e.preventDefault();
+          NT.clearSession();
+          NT.toast("Signed out. See you soon!");
+          location.href = "index.html";
+        });
+
+        var orders = NT.ordersForUser(user.id);
+        var totalSpent = orders.reduce(function (sum, o) { return sum + o.total; }, 0);
+        var inProgress = orders.filter(function (o) {
+          var s = String(o.status || "").toLowerCase();
+          return s === "processing" || s === "shipped";
+        }).length;
+
+        document.getElementById("statCards").innerHTML =
+          card(orders.length, "Orders") + card(inProgress, "In progress") + card("$" + totalSpent.toLocaleString("en-US"), "Total spent");
+
+        function card(value, label) {
+          return '<div class="stat-card"><b>' + value + "</b><span>" + label + "</span></div>";
+        }
+
+        var orderList = document.getElementById("orderList");
+        if (!orders.length) {
+          orderList.innerHTML = '<div class="empty">No orders yet. Start with something great.</div><div style="margin-top:14px"><a class="button" href="shop.html">Shop now →</a></div>';
+        } else {
+          orderList.innerHTML = orders.slice().reverse().map(function (o) {
+            var lines = o.items.map(function (i) { return NT.sanitize(i.name) + " × " + i.qty; }).join(" · ");
+            var statusClass = String(o.status || "").toLowerCase();
+            return '<div class="order-card">' +
+              '<div class="order-head">' +
+                '<span><span class="order-id">' + NT.sanitize(o.id) + "</span> &nbsp;·&nbsp; <span class=\"order-date\">" + NT.dateFmt(o.date) + "</span></span>" +
+                '<span class="order-status ' + statusClass + '">' + NT.sanitize(o.status) + "</span>" +
+              "</div>" +
+              '<div class="order-lines">' + lines + "</div>" +
+              '<div class="order-total">Total: <b>' + NT.formatPrice(o.total) + "</b></div>" +
+            "</div>";
+          }).join("");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>ASUS ROG Strix G17 — NovaTech</title>
+    <title>Product — NovaTech</title>
     <link rel="stylesheet" href="src/tech.css" />
+    <link rel="stylesheet" href="src/features.css" />
   </head>
   <body>
     <div class="notice">
@@ -27,32 +28,24 @@
       <a class="logo" href="index.html">NOVA<i>TECH</i></a>
       <div class="actions">
         <a href="contact.html">Support</a
-        ><a class="bag" href="#">Bag <span class="bubble" id="bag">0</span></a>
+        ><a class="bag" href="cart.html">Bag <span class="bubble" id="bag">0</span></a>
       </div>
     </header>
     <main class="wrap">
       <div class="crumb">
         <a href="index.html">Home</a> / <a href="shop.html">Shop</a> /
-        <span id="crumb">ASUS ROG Strix G17</span>
+        <span id="crumb">Product</span>
       </div>
-      <section class="detail">
+      <section class="detail" data-reveal>
         <div class="gallery">
-          <img
-            id="image"
-            src="assets/images/asus-rog.jpg"
-            alt="ASUS ROG Strix G17"
-          />
+          <img id="image" alt="Product" />
         </div>
         <div>
-          <div class="eyebrow">ASUS ROG / Gaming laptop</div>
-          <h1 id="name">ASUS ROG Strix G17</h1>
-          <span class="stars">★★★★★ &nbsp; 4.9 / 142 reviews</span>
-          <div class="price-big" id="price">$1,199.00</div>
-          <p id="description">
-            BUILT FOR GAMING WITHOUT LIMITS.
-            The NovaBook Air pairs an all-day battery with a brilliant,
-            colour-true display.
-          </p>
+          <div class="eyebrow" id="categoryLine">NOVATECH / Product</div>
+          <h1 id="name">Loading…</h1>
+          <span class="stars" id="ratingLine">★★★★★</span>
+          <div class="price-big" id="price">—</div>
+          <p id="description">Loading product details…</p>
           <hr class="divider" />
           <b
             style="
@@ -72,106 +65,102 @@
               <button id="minus">−</button><span id="qty">1</span
               ><button id="plus">+</button>
             </div>
-            <button class="button" id="add">Add to bag — $1,199.00</button>
+            <button class="button" id="add">Add to bag</button>
           </div>
-          <ul class="features">
-            <li>14.2-inch 3K anti-glare display</li>
-            <li>240Hz high-refresh gaming display</li>
-            <li>NVIDIA GeForce RTX graphics</li>
-            <li>Official ASUS ROG warranty included</li>
-          </ul>
+          <div class="pay-note">
+            Free delivery over $50 · 1 year warranty · 30-day returns
+          </div>
         </div>
       </section>
       <section class="related">
-        <div class="eyebrow">Complete your setup</div>
-        <h2 class="section-head">Made to work together.</h2>
-        <div class="product-grid">
-          <article class="product">
-            <div class="product-image">
-              <img src="assets/images/asus-rog.jpg" alt="Keyboard" />
-            </div>
-            <div class="p-info">
-              <h3>ASUS ROG Zephyrus G16</h3>
-              <span class="price">$149.00</span>
-            </div>
-          </article>
-          <article class="product">
-            <div class="product-image">
-              <img src="assets/images/asus-rog.jpg" alt="Monitor" />
-            </div>
-            <div class="p-info">
-              <h3>MSI Raider 18 HX</h3>
-              <span class="price">$479.00</span>
-            </div>
-          </article>
-          <article class="product">
-            <div class="product-image">
-              <img src="assets/images/asus-rog.jpg" alt="Hub" />
-            </div>
-            <div class="p-info">
-              <h3>MSI Cyborg 15</h3>
-              <span class="price">$79.00</span>
-            </div>
-          </article>
-        </div>
+        <div class="eyebrow" data-reveal>Complete your setup</div>
+        <h2 class="section-head" data-reveal>Made to work together.</h2>
+        <div class="product-grid" id="relatedGrid"></div>
       </section>
     </main>
     <footer class="footer">
       <div class="wrap">
+        <div class="footer-top">
+          <div>
+            <a class="logo" href="index.html">NOVA<i>TECH</i></a>
+            <p>Sharper tools for the way you live, work, and play.</p>
+          </div>
+          <div>
+            <h4>Shop</h4>
+            <a href="shop.html">Laptops & tablets</a
+            ><a href="shop.html">Audio</a>
+          </div>
+          <div>
+            <h4>Help</h4>
+            <a href="contact.html">Contact support</a
+            ><a href="contact.html">Warranty</a>
+          </div>
+          <div>
+            <h4>Stay connected</h4>
+            <a href="contact.html">Subscribe →</a>
+          </div>
+        </div>
         <div class="footer-bottom">
           <span>© 2026 NOVATECH</span><span>PRIVACY · TERMS · INSTAGRAM</span>
         </div>
       </div>
     </footer>
+    <script src="src/store.js"></script>
+    <script src="src/auth.js"></script>
+    <script src="src/navbar.js"></script>
+    <script src="src/reveal.js"></script>
     <script>
-      const data = [
-        [
-          "ASUS ROG Strix G17",
-          "$1,199.00",
-          "assets/images/asus-rog.jpg",
-          "An impossibly light machine built for deep focus and real momentum.",
-        ],
-        [
-          "MSI Katana 17 HX",
-          "$249.00",
-          "assets/images/asus-rog.jpg",
-          "Immersive sound, pinpoint clarity, and quiet wherever you need it.",
-        ],
-        [
-          "ASUS ROG Zephyrus G16",
-          "$149.00",
-          "assets/images/asus-rog.jpg",
-          "A satisfying, programmable keyboard built for every brilliant idea.",
-        ],
-        [
-          "MSI Stealth 16 AI Studio",
-          "$299.00",
-          "assets/images/asus-rog.jpg",
-          "Your health, activity, and day — perfectly in sync.",
-        ],
-      ];
-      let d =
-        data[Math.min(+new URLSearchParams(location.search).get("id") || 0, 3)];
-      name.textContent = crumb.textContent = d[0];
-      price.textContent = d[1];
-      image.src = image.alt = d[2];
-      description.textContent = d[3];
-      let q = 1;
-      plus.onclick = () => (qty.textContent = ++q);
-      minus.onclick = () => (qty.textContent = q = Math.max(1, q - 1));
-      document.querySelectorAll(".chip").forEach(
-        (x) =>
-          (x.onclick = () => {
+      document.addEventListener("DOMContentLoaded", function () {
+        var productId = Number(new URLSearchParams(location.search).get("id")) || 1;
+        var product = NT.getProduct(productId);
+        if (!product) {
+          document.getElementById("name").textContent = "Product not found";
+          document.getElementById("description").textContent = "This product may have been removed by the store admin.";
+          document.getElementById("add").disabled = true;
+          return;
+        }
+
+        document.title = product.name + " — NovaTech";
+        document.getElementById("crumb").textContent = product.name;
+        document.getElementById("name").textContent = product.name;
+        document.getElementById("image").src = product.image;
+        document.getElementById("image").alt = product.name;
+        document.getElementById("price").textContent = NT.formatPrice(product.price);
+        document.getElementById("description").textContent = product.description;
+        document.getElementById("categoryLine").textContent = product.category + " / Featured";
+        document.getElementById("ratingLine").textContent = "★★★★★ &nbsp; " + (product.rating || "4.5") + " / " + (product.reviews || 0) + " reviews";
+
+        var q = 1;
+        var qtyEl = document.getElementById("qty");
+        document.getElementById("plus").onclick = function () { qtyEl.textContent = ++q; };
+        document.getElementById("minus").onclick = function () { qtyEl.textContent = q = Math.max(1, q - 1); };
+
+        document.querySelectorAll(".chip").forEach(function (chip) {
+          chip.onclick = function () {
             document.querySelector(".chip.active").classList.remove("active");
-            x.classList.add("active");
-          }),
-      );
-      add.onclick = () => {
-        bag.textContent = +bag.textContent + q;
-        add.textContent = "Added to bag ✓";
-        setTimeout(() => (add.textContent = "Add to bag — " + d[1]), 1600);
-      };
+            chip.classList.add("active");
+          };
+        });
+
+        var addBtn = document.getElementById("add");
+        addBtn.onclick = function () {
+          NT.cartAdd(product.id, q);
+          NT.toast(product.name + " added to bag (" + q + "×)");
+          addBtn.textContent = "Added to bag ✓";
+          setTimeout(function () { addBtn.textContent = "Add to bag — " + NT.formatPrice(product.price); }, 1600);
+        };
+
+        // Related products (same category, then any others)
+        var related = NT.products()
+          .filter(function (p) { return p.id !== product.id; })
+          .sort(function (a, b) {
+            var aMatch = a.category === product.category ? 0 : 1;
+            var bMatch = b.category === product.category ? 0 : 1;
+            return aMatch - bMatch;
+          })
+          .slice(0, 4);
+        NT.renderGrid("relatedGrid", related);
+      });
     </script>
-      <script src="src/navbar.js"></script>
   </body>
 </html>

@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Your bag — NovaTech</title>
+    <link rel="stylesheet" href="src/tech.css" />
+    <link rel="stylesheet" href="src/features.css" />
+  </head>
+  <body>
+    <div class="notice">Free delivery on orders over $50 · 1 year warranty</div>
+    <header class="wrap top">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a href="shop.html">Shop</a
+        ><a href="index.html#categories">Categories</a
+        ><a href="index.html#discover">Discover</a>
+      </nav>
+      <a class="logo" href="index.html">NOVA<i>TECH</i></a>
+      <div class="actions">
+        <a href="contact.html">Support</a
+        ><a class="bag" href="cart.html">Bag <span class="bubble">0</span></a>
+      </div>
+    </header>
+    <section class="page-head compact" data-reveal>
+      <div class="wrap">
+        <div class="eyebrow">Checkout</div>
+        <h1>Your bag.</h1>
+        <p>Review your picks, then place your order in seconds.</p>
+      </div>
+    </section>
+
+    <!-- Cart view -->
+    <main class="wrap cart-layout" id="cartView">
+      <section data-reveal>
+        <div class="dash-section">
+          <h3>Items</h3>
+          <div class="cart-list" id="cartList"></div>
+        </div>
+      </section>
+      <aside class="cart-summary" id="cartSummary" data-reveal="right">
+        <h3>Summary</h3>
+        <div class="sum-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+        <div class="sum-row"><span>Shipping</span><span id="shipping">—</span></div>
+        <div class="sum-row"><span>Estimated tax</span><span id="tax">$0.00</span></div>
+        <div class="sum-total"><b>Total</b><span id="total">$0.00</span></div>
+        <button class="button" id="goCheckout">Checkout →</button>
+        <a class="button outline" href="shop.html" style="width:100%;justify-content:center;margin-top:10px;text-align:center;display:flex">Continue shopping</a>
+      </aside>
+    </main>
+
+    <!-- Checkout view -->
+    <main class="wrap cart-layout" id="checkoutView" style="display:none">
+      <section data-reveal>
+        <form id="checkoutForm" class="checkout-grid">
+          <div class="checkout-card">
+            <h3>1 · Contact & shipping</h3>
+            <div class="form-grid">
+              <div class="field">
+                <label for="cName">Full name</label>
+                <input id="cName" required placeholder="Alex Morgan" />
+              </div>
+              <div class="field">
+                <label for="cEmail">Email address</label>
+                <input id="cEmail" type="email" required placeholder="you@example.com" />
+              </div>
+              <div class="field full">
+                <label for="cAddress">Street address</label>
+                <input id="cAddress" required placeholder="88 Mercer Street" />
+              </div>
+              <div class="field">
+                <label for="cCity">City</label>
+                <input id="cCity" required placeholder="New York" />
+              </div>
+              <div class="field">
+                <label for="cZip">ZIP / postal code</label>
+                <input id="cZip" required placeholder="10012" />
+              </div>
+            </div>
+            <div class="pay-note" id="guestNote">
+              🔒 Demo store — no real payment is processed. Orders are stored in your browser.
+              <span id="guestSignIn" style="display:none"> You can <a href="login.html?next=cart.html" style="color:var(--cyan);font-weight:700">sign in</a> to track this order in your account.</span>
+            </div>
+          </div>
+          <div class="checkout-card">
+            <h3>2 · Payment</h3>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="cCard">Card number</label>
+                <input id="cCard" required placeholder="1234 5678 9012 3456" inputmode="numeric" />
+              </div>
+              <div class="field">
+                <label for="cExp">Expiry</label>
+                <input id="cExp" required placeholder="MM / YY" />
+              </div>
+              <div class="field">
+                <label for="cCvc">CVC</label>
+                <input id="cCvc" required placeholder="123" inputmode="numeric" />
+              </div>
+            </div>
+            <div class="pay-note">This is a demo checkout. No card is charged.</div>
+          </div>
+          <div>
+            <button class="button" type="submit" style="justify-content:center;width:100%">Place order — <span id="confirmTotal">$0.00</span></button>
+            <button class="button ghost" type="button" id="backToCart" style="width:100%;justify-content:center;margin-top:10px">← Back to bag</button>
+          </div>
+        </form>
+      </section>
+      <aside class="cart-summary">
+        <h3>Order summary</h3>
+        <div class="sum-row"><span>Items</span><span id="oCount">0</span></div>
+        <div class="sum-row"><span>Subtotal</span><span id="oSubtotal">$0.00</span></div>
+        <div class="sum-row"><span>Shipping</span><span id="oShipping">—</span></div>
+        <div class="sum-row"><span>Estimated tax</span><span id="oTax">$0.00</span></div>
+        <div class="sum-total"><b>Total</b><span id="oTotal">$0.00</span></div>
+      </aside>
+    </main>
+
+    <!-- Success view -->
+    <main class="wrap" id="successView" style="display:none;padding-bottom:110px">
+      <div class="checkout-success" data-reveal>
+        <div class="tick">✓</div>
+        <h2>Order placed!</h2>
+        <p>Thanks — your order <b id="orderId" style="color:var(--cyan)"></b> is being prepared.<br />We’ll ship it to you shortly.</p>
+        <a class="button" href="account.html">View my orders →</a>
+        <a class="button ghost" href="shop.html" style="margin-left:10px">Keep shopping</a>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-bottom">
+          <span>© 2026 NOVATECH</span><span>PRIVACY · TERMS · INSTAGRAM</span>
+        </div>
+      </div>
+    </footer>
+    <script src="src/store.js"></script>
+    <script src="src/navbar.js"></script>
+    <script src="src/reveal.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var SHIPPING_FREE_AT = 50;
+        var SHIPPING_FEE = 15;
+        var TAX_RATE = 0.08;
+
+        function shippingFor(total) {
+          return total >= SHIPPING_FREE_AT ? 0 : SHIPPING_FEE;
+        }
+        function totals() {
+          var subtotal = NT.cartTotal();
+          var shipping = shippingFor(subtotal);
+          var tax = subtotal * TAX_RATE;
+          return { subtotal: subtotal, shipping: shipping, tax: tax, total: subtotal + shipping + tax };
+        }
+
+        function fmt(n) { return NT.formatPrice(n); }
+
+        function renderCart() {
+          var items = NT.cartDetailed();
+          var list = document.getElementById("cartList");
+
+          if (!items.length) {
+            list.innerHTML = '<div class="empty">Your bag is empty.</div>';
+            document.getElementById("goCheckout").disabled = true;
+          } else {
+            document.getElementById("goCheckout").disabled = false;
+            list.innerHTML = items.map(function (entry) {
+              var p = entry.product;
+              return '<div class="cart-row">' +
+                '<img src="' + p.image + '" alt="' + NT.sanitize(p.name) + '">' +
+                "<div>" +
+                  "<h4>" + NT.sanitize(p.name) + "</h4>" +
+                  '<div class="price-line">' + fmt(p.price) + " each</div>" +
+                "</div>" +
+                '<div class="qty-stepper">' +
+                  '<button data-dec="' + p.id + '">−</button>' +
+                  "<span>" + entry.qty + "</span>" +
+                  '<button data-inc="' + p.id + '">+</button>' +
+                "</div>" +
+                '<div style="display:flex;align-items:center;gap:14px">' +
+                  '<span class="cart-line-total">' + fmt(entry.lineTotal) + "</span>" +
+                  '<button class="cart-remove" data-remove="' + p.id + '">Remove</button>' +
+                "</div>" +
+              "</div>";
+            }).join("");
+
+            list.querySelectorAll("[data-inc]").forEach(function (b) {
+              b.addEventListener("click", function () { NT.cartSetQty(b.dataset.inc, (NT.cartItems().find(function (i) { return i.productId === Number(b.dataset.inc); }) || {}).qty + 1); renderAll(); });
+            });
+            list.querySelectorAll("[data-dec]").forEach(function (b) {
+              b.addEventListener("click", function () {
+                var found = NT.cartItems().find(function (i) { return i.productId === Number(b.dataset.dec); });
+                if (found) NT.cartSetQty(b.dataset.dec, found.qty - 1);
+                renderAll();
+              });
+            });
+            list.querySelectorAll("[data-remove]").forEach(function (b) {
+              b.addEventListener("click", function () { NT.cartRemove(b.dataset.remove); NT.toast("Removed from bag."); renderAll(); });
+            });
+          }
+
+          var t = totals();
+          document.getElementById("subtotal").textContent = fmt(t.subtotal);
+          document.getElementById("shipping").textContent = t.shipping === 0 ? "Free" : fmt(t.shipping);
+          document.getElementById("tax").textContent = fmt(t.tax);
+          document.getElementById("total").textContent = fmt(t.total);
+          // checkout summary mirrors
+          document.getElementById("oCount").textContent = NT.cartCount();
+          document.getElementById("oSubtotal").textContent = fmt(t.subtotal);
+          document.getElementById("oShipping").textContent = t.shipping === 0 ? "Free" : fmt(t.shipping);
+          document.getElementById("oTax").textContent = fmt(t.tax);
+          document.getElementById("oTotal").textContent = fmt(t.total);
+          document.getElementById("confirmTotal").textContent = fmt(t.total);
+        }
+
+        function renderAll() { renderCart(); }
+
+        // Guest / signed-in note
+        var user = NT.currentUser();
+        if (user) {
+          document.getElementById("cName").value = user.name;
+          document.getElementById("cEmail").value = user.email;
+        } else {
+          document.getElementById("guestSignIn").style.display = "inline";
+        }
+
+        // Checkout navigation
+        document.getElementById("goCheckout").addEventListener("click", function () {
+          if (!NT.cartItems().length) { NT.toast("Your bag is empty."); return; }
+          document.getElementById("cartView").style.display = "none";
+          document.getElementById("checkoutView").style.display = "grid";
+          document.getElementById("checkoutView").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        document.getElementById("backToCart").addEventListener("click", function () {
+          document.getElementById("checkoutView").style.display = "none";
+          document.getElementById("cartView").style.display = "grid";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // Place order
+        document.getElementById("checkoutForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!NT.cartItems().length) { NT.toast("Your bag is empty."); return; }
+
+          var order = NT.placeOrder({
+            userId: user ? user.id : null,
+            name: document.getElementById("cName").value.trim(),
+            email: document.getElementById("cEmail").value.trim(),
+            address: document.getElementById("cAddress").value.trim(),
+            city: document.getElementById("cCity").value.trim(),
+            zip: document.getElementById("cZip").value.trim()
+          });
+
+          document.getElementById("checkoutView").style.display = "none";
+          document.getElementById("cartView").style.display = "none";
+          document.getElementById("successView").style.display = "block";
+          document.getElementById("orderId").textContent = order.id;
+          NT.toast("Order " + order.id + " placed!");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        renderCart();
+        NT.on("cart", renderCart);
+      });
+    </script>
+  </body>
+</html>

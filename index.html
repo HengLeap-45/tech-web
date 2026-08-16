@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>NovaTech — Future-ready gear</title>
     <link rel="stylesheet" href="src/tech.css" />
+    <link rel="stylesheet" href="src/features.css" />
   </head>
   <body>
     <div class="notice">
@@ -26,15 +27,13 @@
       <a class="logo" href="index.html">NOVA<i>TECH</i></a>
       <div class="actions">
         <a href="contact.html">Support</a
-        ><button class="bag" id="bagButton">
-          Bag <span class="bubble" id="bag">0</span>
-        </button>
+        ><a class="bag" href="cart.html">Bag <span class="bubble" id="bag">0</span></a>
       </div>
     </header>
     <main>
       <section class="wrap hero">
         <div class="hero-grid">
-          <div class="hero-copy">
+          <div class="hero-copy" data-reveal>
             <div class="eyebrow">The best of todays technology</div>
             <h1>Computers <span>and</span> Accessories.</h1>
             <p>
@@ -43,7 +42,7 @@
             </p>
             <a class="button" href="shop.html">Shop Now →</a>
           </div>
-          <div class="hero-art">
+          <div class="hero-art" data-reveal="right">
             <div class="hero-orb">
               <img src="assets/images/image.png" alt="Modern laptop" />
             </div>
@@ -51,12 +50,12 @@
         </div>
       </section>
       <div class="wrap stats">
-        <div class="stat"><b>↗</b> Free delivery on all orders over $50</div>
-        <div class="stat"><b>⌁</b> 1 Year warranty on all products</div>
-        <div class="stat"><b>◌</b> 24/7 Live Chat Support</div>
+        <div class="stat" data-reveal style="--rd:100ms"><b>↗</b> Free delivery on all orders over $50</div>
+        <div class="stat" data-reveal style="--rd:200ms"><b>⌁</b> 1 Year warranty on all products</div>
+        <div class="stat" data-reveal style="--rd:300ms"><b>◌</b> 24/7 Live Chat Support</div>
       </div>
       <section class="wrap categories" id="categories">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <div>
             <div class="eyebrow">Shop by category</div>
             <h2>Choose your gadgets.</h2>
@@ -64,7 +63,7 @@
           <a class="link" href="shop.html">SHOP ALL</a>
         </div>
         <div class="category-grid">
-          <article class="category">
+          <article class="category" data-reveal style="--rd:0ms">
             <img
               src="assets/images/r2.png"
               alt="Computer setup"
@@ -74,7 +73,7 @@
               <a href="shop.html">Explore →</a>
             </div>
           </article>
-          <article class="category">
+          <article class="category" data-reveal style="--rd:120ms">
             <img
               src="assets/images/audio.png"
               alt="Headphones"
@@ -84,7 +83,7 @@
               <a href="shop.html">Explore →</a>
             </div>
           </article>
-          <article class="category">
+          <article class="category" data-reveal style="--rd:240ms">
             <img
               src="https://www.asus.com/media/global/products/GNrHbu1pqeQfHvXT/P_setting_xxx_0_90_end_692.png"
               alt="Smart watch"
@@ -97,7 +96,7 @@
         </div>
       </section>
       <section class="wrap shop">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <div>
             <div class="eyebrow">Just Dropped</div>
             <h2>New tech, no limits.</h2>
@@ -108,7 +107,7 @@
       </section>
       <section class="promo" id="discover">
         <div class="wrap promo-grid">
-          <div class="promo-copy">
+          <div class="promo-copy" data-reveal>
             <div class="eyebrow">Work without limits</div>
             <h2>Power up your everyday.</h2>
             <p>
@@ -117,7 +116,7 @@
             </p>
             <a href="shop.html" class="button alt">Shop computing →</a>
           </div>
-          <div class="promo-img">
+          <div class="promo-img" data-reveal="right">
             <img
               src="assets/images/image copy 3.png"
               alt="Laptop workspace"
@@ -155,7 +154,14 @@
         </div>
       </div>
     </footer>
-        
-      <script src="navbar.js"></script>
+    <script src="src/store.js"></script>
+    <script src="src/auth.js"></script>
+    <script src="src/navbar.js"></script>
+    <script src="src/reveal.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        NT.renderGrid("products", NT.products().slice(0, 8));
+      });
+    </script>
   </body>
 </html>

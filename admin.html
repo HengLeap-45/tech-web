@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin — NovaTech</title>
+    <link rel="stylesheet" href="src/tech.css" />
+    <link rel="stylesheet" href="src/features.css" />
+  </head>
+  <body>
+    <div class="notice">Admin panel · internal use only</div>
+    <header class="wrap top">
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a href="shop.html">Shop</a
+        ><a href="index.html#categories">Categories</a
+        ><a href="account.html">My account</a>
+      </nav>
+      <a class="logo" href="index.html">NOVA<i>TECH</i></a>
+      <div class="actions">
+        <a href="contact.html">Support</a
+        ><a class="bag" href="cart.html">Bag <span class="bubble">0</span></a>
+      </div>
+    </header>
+    <section class="page-head compact">
+      <div class="wrap">
+        <div class="eyebrow">Control center</div>
+        <h1>Admin panel.</h1>
+        <p>Manage products, orders, customers, and support requests.</p>
+      </div>
+    </section>
+    <main class="wrap admin-layout">
+      <nav class="admin-nav" id="adminNav">
+        <a href="#overview" data-panel="overview" class="active">Overview</a>
+        <a href="#products" data-panel="products">Products</a>
+        <a href="#orders" data-panel="orders">Orders</a>
+        <a href="#customers" data-panel="customers">Customers</a>
+        <a href="#listings" data-panel="listings">Listings</a>
+        <a href="#messages" data-panel="messages">Support messages</a>
+        <a href="account.html" style="margin-top:14px;color:var(--cyan)">← My account</a>
+        <a href="shop.html">View storefront →</a>
+      </nav>
+
+      <section class="admin-panel">
+        <!-- Overview -->
+        <div class="admin-tab" id="tab-overview">
+          <div class="admin-toolbar"><h2>Overview</h2></div>
+          <div class="admin-stats" id="overviewStats"></div>
+          <div class="dash-section">
+            <h3>Latest orders</h3>
+            <div class="order-list" id="overviewOrders"></div>
+          </div>
+        </div>
+
+        <!-- Products -->
+        <div class="admin-tab" id="tab-products" style="display:none">
+          <div class="admin-toolbar">
+            <h2>Products</h2>
+            <button class="button" id="addProductBtn" style="padding:11px 16px;font-size:11px">+ Add product</button>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Product</th><th>Category</th><th>Price</th><th>Badge</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="productsBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="admin-tab" id="tab-orders" style="display:none">
+          <div class="admin-toolbar"><h2>Orders</h2></div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Customers -->
+        <div class="admin-tab" id="tab-customers" style="display:none">
+          <div class="admin-toolbar"><h2>Customers</h2></div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>User</th><th>Email</th><th>Role</th><th>Orders</th><th>Total spent</th><th>Joined</th></tr>
+              </thead>
+              <tbody id="customersBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Listings -->
+        <div class="admin-tab" id="tab-listings" style="display:none">
+          <div class="admin-toolbar"><h2>Seller listings</h2></div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Item</th><th>Seller</th><th>Price</th><th>Condition</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="listingsBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="admin-tab" id="tab-messages" style="display:none">
+          <div class="admin-toolbar"><h2>Support messages</h2></div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Date</th><th>Name</th><th>Email</th><th>Topic</th><th>Message</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="messagesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Product modal -->
+    <div class="modal" id="productModal">
+      <div class="modal-card">
+        <button class="modal-close" data-close="productModal">×</button>
+        <h3 id="productModalTitle">Add product</h3>
+        <form id="productForm" class="form-grid">
+          <div class="field full">
+            <label for="pName">Product name</label>
+            <input id="pName" required placeholder="NovaBook X" />
+          </div>
+          <div class="field">
+            <label for="pCategory">Category</label>
+            <select id="pCategory">
+              <option>Laptops & tablets</option>
+              <option>Audio</option>
+              <option>Accessories</option>
+              <option>Wearables</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pPrice">Price (USD)</label>
+            <input id="pPrice" type="number" min="0" step="0.01" required placeholder="199.00" />
+          </div>
+          <div class="field">
+            <label for="pBadge">Badge</label>
+            <input id="pBadge" placeholder="New / Best seller" />
+          </div>
+          <div class="field">
+            <label for="pImage">Image URL</label>
+            <input id="pImage" required placeholder="https://… or assets/images/…" />
+          </div>
+          <div class="field full">
+            <label for="pDescription">Description</label>
+            <textarea id="pDescription" required placeholder="Short product description"></textarea>
+          </div>
+          <div class="modal-actions full">
+            <button class="button" type="submit">Save product</button>
+            <button class="button ghost" type="button" data-close="productModal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-bottom">
+          <span>© 2026 NOVATECH — ADMIN</span><span>PRIVACY · TERMS · INSTAGRAM</span>
+        </div>
+      </div>
+    </footer>
+    <script src="src/store.js"></script>
+    <script src="src/navbar.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var user = NT.currentUser();
+        if (!user || user.role !== "admin") {
+          NT.toast("Admins only. Redirecting to sign in…");
+          location.href = "login.html?next=admin.html";
+          return;
+        }
+
+        var editingId = null;
+
+        /* ---------- tabs ---------- */
+        var tabs = document.querySelectorAll(".admin-nav a[data-panel]");
+        tabs.forEach(function (link) {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            setTab(link.dataset.panel);
+          });
+        });
+        function setTab(name) {
+          tabs.forEach(function (l) { l.classList.toggle("active", l.dataset.panel === name); });
+          document.querySelectorAll(".admin-tab").forEach(function (t) {
+            t.style.display = t.id === "tab-" + name ? "block" : "none";
+          });
+        }
+
+        /* ---------- renderers ---------- */
+        function renderOverview() {
+          var orders = NT.orders();
+          var users = NT.users();
+          var messages = NT.messages();
+          var revenue = NT.orders().filter(function (o) { return String(o.status).toLowerCase() !== "cancelled"; })
+            .reduce(function (sum, o) { return sum + o.total; }, 0);
+
+          document.getElementById("overviewStats").innerHTML =
+            stat(NT.products().length, "Products") +
+            stat(orders.length, "Orders") +
+            stat(users.length, "Customers") +
+            stat("$" + revenue.toLocaleString("en-US"), "Revenue");
+
+          var list = document.getElementById("overviewOrders");
+          if (!orders.length) {
+            list.innerHTML = '<div class="empty">No orders yet.</div>';
+          } else {
+            list.innerHTML = orders.slice().reverse().slice(0, 4).map(function (o) {
+              var s = String(o.status || "").toLowerCase();
+              return '<div class="order-card">' +
+                '<div class="order-head">' +
+                  '<span><span class="order-id">' + NT.sanitize(o.id) + "</span> &nbsp;·&nbsp; <span class=\"order-date\">" + NT.dateFmt(o.date) + "</span></span>" +
+                  '<span class="order-status ' + s + '">' + NT.sanitize(o.status) + "</span>" +
+                "</div>" +
+                '<div class="order-lines">' + NT.sanitize(o.customer) + " — " + NT.sanitize(o.items.map(function (i) { return i.name + " × " + i.qty; }).join(" · ")) + "</div>" +
+                '<div class="order-total">Total: <b>' + NT.formatPrice(o.total) + "</b></div>" +
+              "</div>";
+            }).join("");
+          }
+        }
+        function stat(value, label) {
+          return '<div class="admin-stat"><b>' + value + "</b><span>" + label + "</span></div>";
+        }
+
+        function renderProducts() {
+          document.getElementById("productsBody").innerHTML = NT.products().map(function (p) {
+            return "<tr>" +
+              '<td><div style="display:flex;align-items:center;gap:12px">' +
+                '<img class="thumb" src="' + p.image + '" alt="' + NT.sanitize(p.name) + '">' +
+                '<span class="name">' + NT.sanitize(p.name) + "</span></div></td>" +
+              "<td>" + NT.sanitize(p.category) + "</td>" +
+              '<td class="muted-td">' + NT.formatPrice(p.price) + "</td>" +
+              "<td>" + (p.badge ? NT.sanitize(p.badge) : "—") + "</td>" +
+              '<td>' +
+                '<button class="admin-btn" data-edit="' + p.id + '">Edit</button>' +
+                '<button class="admin-btn danger" data-delete="' + p.id + '">Delete</button>' +
+              "</td>" +
+            "</tr>";
+          }).join("");
+
+          document.querySelectorAll("[data-edit]").forEach(function (b) {
+            b.addEventListener("click", function () { openProductModal(NT.getProduct(b.dataset.edit)); });
+          });
+          document.querySelectorAll("[data-delete]").forEach(function (b) {
+            b.addEventListener("click", function () {
+              if (!confirm("Delete this product?")) return;
+              NT.saveProducts(NT.products().filter(function (p) { return p.id !== Number(b.dataset.delete); }));
+              NT.toast("Product deleted.");
+              renderAll();
+            });
+          });
+        }
+
+        function renderOrders() {
+          var orders = NT.orders();
+          var body = document.getElementById("ordersBody");
+          if (!orders.length) {
+            body.innerHTML = '<tr><td colspan="7" class="muted-td" style="padding:30px;text-align:center">No orders yet.</td></tr>';
+            return;
+          }
+          body.innerHTML = orders.slice().reverse().map(function (o) {
+            var s = String(o.status || "").toLowerCase();
+            var statusOptions = ["Processing", "Shipped", "Delivered", "Cancelled"]
+              .map(function (opt) {
+                return '<option value="' + opt + '"' + (o.status === opt ? " selected" : "") + ">" + opt + "</option>";
+              }).join("");
+            return "<tr>" +
+              '<td class="muted-td">' + NT.sanitize(o.id) + "</td>" +
+              '<td><span class="name">' + NT.sanitize(o.customer) + "</span><br><span class=\"muted-td\">" + NT.sanitize(o.email) + "</span></td>" +
+              "<td>" + NT.sanitize(o.items.map(function (i) { return i.name + " × " + i.qty; }).join("<br>")) + "</td>" +
+              '<td class="muted-td">' + NT.formatPrice(o.total) + "</td>" +
+              '<td class="muted-td">' + NT.dateFmt(o.date) + "</td>" +
+              '<td><span class="order-status ' + s + '">' + NT.sanitize(o.status) + "</span></td>" +
+              "<td style=\"white-space:nowrap\">" +
+                '<select class="sort" data-status="' + o.id + '" style="width:auto;display:inline-block;padding:6px">' + statusOptions + "</select>" +
+              "</td>" +
+            "</tr>";
+          }).join("");
+
+          body.querySelectorAll("[data-status]").forEach(function (sel) {
+            sel.addEventListener("change", function () {
+              NT.updateOrderStatus(sel.dataset.status, sel.value);
+              NT.toast("Order " + sel.dataset.status + " → " + sel.value);
+              renderAll();
+            });
+          });
+        }
+
+        function renderCustomers() {
+          var users = NT.users();
+          var orders = NT.orders();
+          document.getElementById("customersBody").innerHTML = users.map(function (u) {
+            var userOrders = orders.filter(function (o) { return o.userId === u.id; });
+            var spent = userOrders.filter(function (o) { return String(o.status).toLowerCase() !== "cancelled"; })
+              .reduce(function (sum, o) { return sum + o.total; }, 0);
+            var initials = u.name.split(/\s+/).map(function (w) { return w[0]; }).slice(0, 2).join("").toUpperCase();
+            var cell = u.avatar
+              ? '<img class="admin-avatar" src="' + u.avatar + '" alt="' + NT.sanitize(u.name) + '">'
+              : '<span class="avatar-fallback">' + initials + "</span>";
+            return "<tr>" +
+              '<td><div style="display:flex;align-items:center;gap:12px">' + cell +
+                '<span class="name">' + NT.sanitize(u.name) + "</span></div></td>" +
+              '<td class="muted-td">' + NT.sanitize(u.email) + "</td>" +
+              '<td><span class="role-badge ' + NT.sanitize(u.role) + '">' + NT.sanitize(u.role) + "</span></td>" +
+              "<td>" + userOrders.length + "</td>" +
+              '<td class="muted-td">' + NT.formatPrice(spent) + "</td>" +
+              '<td class="muted-td">' + new Date(u.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) + "</td>" +
+            "</tr>";
+          }).join("");
+        }
+
+        function renderListings() {
+          var list = NT.listings();
+          var body = document.getElementById("listingsBody");
+          if (!list.length) {
+            body.innerHTML = '<tr><td colspan="7" class="muted-td" style="padding:30px;text-align:center">No seller listings yet.</td></tr>';
+            return;
+          }
+          body.innerHTML = list.slice().reverse().map(function (l) {
+            var statusClass = String(l.status || "").toLowerCase();
+            var approveBtn = l.status === "pending"
+              ? '<button class="admin-btn primary" data-approve="' + l.id + '">Approve →</button>'
+              : "";
+            return "<tr>" +
+              '<td><div style="display:flex;align-items:center;gap:12px">' +
+                '<img class="thumb" src="' + l.image + '" alt="' + NT.sanitize(l.name) + '">' +
+                '<span class="name">' + NT.sanitize(l.name) + "</span></div></td>" +
+              '<td><span class="name">' + NT.sanitize(l.seller) + "</span><br><span class=\"muted-td\">" + NT.sanitize(l.email) + "</span></td>" +
+              '<td class="muted-td">' + NT.formatPrice(l.price) + "</td>" +
+              "<td>" + NT.sanitize(l.condition) + "</td>" +
+              '<td><span class="order-status ' + statusClass + '">' + NT.sanitize(l.status) + "</span></td>" +
+              '<td class="muted-td">' + NT.dateFmt(l.date) + "</td>" +
+              '<td style="white-space:nowrap">' + approveBtn +
+                '<button class="admin-btn danger" data-del-listing="' + l.id + '">Delete</button>' +
+              "</td>" +
+            "</tr>";
+          }).join("");
+
+          body.querySelectorAll("[data-approve]").forEach(function (b) {
+            b.addEventListener("click", function () {
+              var product = NT.approveListing(b.dataset.approve);
+              if (product) {
+                NT.toast("Listing approved — " + product.name + " is now in the store.");
+              } else {
+                NT.toast("This listing was already processed.");
+              }
+              renderAll();
+            });
+          });
+          body.querySelectorAll("[data-del-listing]").forEach(function (b) {
+            b.addEventListener("click", function () {
+              if (!confirm("Remove this listing?")) return;
+              NT.deleteListing(b.dataset.delListing);
+              NT.toast("Listing removed.");
+              renderAll();
+            });
+          });
+        }
+
+        function renderMessages() {
+          var list = NT.messages();
+          var body = document.getElementById("messagesBody");
+          if (!list.length) {
+            body.innerHTML = '<tr><td colspan="6" class="muted-td" style="padding:30px;text-align:center">No support messages yet.</td></tr>';
+            return;
+          }
+          body.innerHTML = list.slice().reverse().map(function (m) {
+            return "<tr>" +
+              '<td class="muted-td">' + NT.dateFmt(m.date) + "</td>" +
+              '<td><span class="name">' + NT.sanitize(m.name) + "</span></td>" +
+              '<td class="muted-td">' + NT.sanitize(m.email) + "</td>" +
+              "<td>" + NT.sanitize(m.topic) + "</td>" +
+              "<td>" + NT.sanitize(m.message) + "</td>" +
+              '<td><button class="admin-btn danger" data-msg="' + m.id + '">Delete</button></td>' +
+            "</tr>";
+          }).join("");
+
+          body.querySelectorAll("[data-msg]").forEach(function (b) {
+            b.addEventListener("click", function () {
+              NT.saveMessages(NT.messages().filter(function (m) { return m.id !== b.dataset.msg; }));
+              NT.toast("Message deleted.");
+              renderAll();
+            });
+          });
+        }
+
+        function renderAll() {
+          renderOverview();
+          renderProducts();
+          renderOrders();
+          renderCustomers();
+          renderListings();
+          renderMessages();
+        }
+
+        /* ---------- product modal ---------- */
+        function openProductModal(product) {
+          editingId = product ? product.id : null;
+          document.getElementById("productModalTitle").textContent = product ? "Edit product" : "Add product";
+          document.getElementById("pName").value = product ? product.name : "";
+          document.getElementById("pCategory").value = product ? product.category : "Laptops & tablets";
+          document.getElementById("pPrice").value = product ? product.price : "";
+          document.getElementById("pBadge").value = product ? (product.badge || "") : "";
+          document.getElementById("pImage").value = product ? product.image : "";
+          document.getElementById("pDescription").value = product ? product.description : "";
+          document.getElementById("productModal").classList.add("active");
+        }
+        document.getElementById("addProductBtn").addEventListener("click", function () { openProductModal(null); });
+
+        document.querySelectorAll("[data-close]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            document.getElementById(b.dataset.close).classList.remove("active");
+          });
+        });
+        document.querySelectorAll(".modal").forEach(function (m) {
+          m.addEventListener("click", function (e) { if (e.target === m) m.classList.remove("active"); });
+        });
+
+        document.getElementById("productForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+          var data = {
+            name: document.getElementById("pName").value.trim(),
+            category: document.getElementById("pCategory").value,
+            price: Number(document.getElementById("pPrice").value),
+            badge: document.getElementById("pBadge").value.trim(),
+            image: document.getElementById("pImage").value.trim(),
+            description: document.getElementById("pDescription").value.trim()
+          };
+          if (!data.name || !data.image || !data.description || isNaN(data.price)) {
+            NT.toast("Please fill in all required fields.");
+            return;
+          }
+
+          var list = NT.products();
+          if (editingId) {
+            NT.saveProducts(list.map(function (p) {
+              return p.id === editingId ? Object.assign({}, p, data) : p;
+            }));
+            NT.toast("Product updated.");
+          } else {
+            var newId = list.reduce(function (max, p) { return Math.max(max, p.id); }, 0) + 1;
+            data.id = newId;
+            data.rating = 4.5;
+            data.reviews = 0;
+            NT.saveProducts(list.concat([data]));
+            NT.toast("Product added.");
+          }
+          editingId = null;
+          document.getElementById("productModal").classList.remove("active");
+          renderAll();
+        });
+
+        /* ---------- init ---------- */
+        renderAll();
+        NT.on("products", renderProducts);
+        NT.on("orders", function () { renderOrders(); renderOverview(); });
+        NT.on("listings", renderListings);
+      });
+    </script>
+  </body>
+</html>
