@@ -337,8 +337,10 @@ window.NT = (function () {
   ];
 
   function seed() {
-    if (!localStorage.getItem(KEYS.products))
-      write(KEYS.products, SEED_PRODUCTS);
+    // Use the safe read() helper instead of direct localStorage access.
+    // Some mobile/private browsers throw when accessing localStorage directly,
+    // which can abort the script and prevent products from rendering.
+    if (!read(KEYS.products, null)) write(KEYS.products, SEED_PRODUCTS);
   }
   seed();
 
