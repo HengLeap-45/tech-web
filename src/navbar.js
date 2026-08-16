@@ -15,7 +15,9 @@
       if (!actions) return;
 
       // Remove previously injected auth links (if re-rendered)
-      actions.querySelectorAll(".nt-auth").forEach(function (el) { el.remove(); });
+      actions.querySelectorAll(".nt-auth").forEach(function (el) {
+        el.remove();
+      });
 
       var user = NT.currentUser();
       var frag = document.createDocumentFragment();
@@ -29,7 +31,13 @@
       }
 
       if (user) {
-        frag.appendChild(link("account.html", "nt-auth", "Hi, " + esc(user.name.split(" ")[0])));
+        frag.appendChild(
+          link(
+            "account.html",
+            "nt-auth",
+            "Hi, " + esc(user.name.split(" ")[0]),
+          ),
+        );
         if (user.role === "admin") {
           frag.appendChild(link("admin.html", "nt-auth admin-link", "Admin"));
         }
@@ -43,7 +51,9 @@
         frag.appendChild(logout);
       } else {
         frag.appendChild(link("login.html", "nt-auth", "Sign in"));
-        frag.appendChild(link("login.html?tab=register", "nt-auth", "Register"));
+        frag.appendChild(
+          link("login.html?tab=register", "nt-auth", "Register"),
+        );
       }
 
       var bag = actions.querySelector(".bag");
@@ -68,7 +78,10 @@
       toggle.addEventListener("click", function () {
         var isOpen = navigation.classList.toggle("open");
         toggle.setAttribute("aria-expanded", String(isOpen));
-        toggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+        toggle.setAttribute(
+          "aria-label",
+          isOpen ? "Close navigation" : "Open navigation",
+        );
       });
 
       navigation.querySelectorAll("a").forEach(function (link) {

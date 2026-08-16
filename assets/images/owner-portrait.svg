@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1000" role="img" aria-label="Owner portrait placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#dfeaf8"/>
+      <stop offset="100%" stop-color="#b9cfe5"/>
+    </linearGradient>
+    <linearGradient id="suit" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#101a2a"/>
+      <stop offset="100%" stop-color="#1f2d3d"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1000" fill="url(#bg)"/>
+  <circle cx="450" cy="320" r="170" fill="#f0d7c6"/>
+  <path d="M300 310c14-120 84-190 160-190 92 0 156 80 170 190-18-30-60-52-98-62-38-10-88-8-122 7-27 12-80 33-110 58z" fill="#1d1d20"/>
+  <path d="M285 382c38-62 105-94 170-94 74 0 138 30 180 92l42 360H240l45-358z" fill="url(#suit)"/>
+  <rect x="300" y="390" width="300" height="420" rx="24" fill="url(#suit)" opacity="0.96"/>
+  <circle cx="450" cy="358" r="154" fill="#f0d7c6"/>
+  <path d="M310 372c28-104 98-160 174-160 105 0 164 70 176 167-40-52-106-86-176-84-97 0-148 38-174 77z" fill="#171b1d"/>
+  <path d="M362 285c26 36 58 55 88 55 35 0 80-19 111-55v50c-48 30-82 42-112 42-40 0-84-15-122-42v-50z" fill="#111418"/>
+  <circle cx="410" cy="342" r="10" fill="#1f1f1f"/>
+  <circle cx="500" cy="342" r="10" fill="#1f1f1f"/>
+  <path d="M420 400c24 28 56 40 92 36-12 34-38 54-84 54-46 0-82-20-92-58 22-8 46-16 84-32z" fill="#d8b59b" opacity="0.8"/>
+  <path d="M370 454l130 18 40 118-178 6-34-116 42-26z" fill="#fafafa" opacity="0.2"/>
+  <rect x="376" y="670" width="148" height="16" rx="8" fill="#b2c5da" opacity="0.7"/>
+</svg>

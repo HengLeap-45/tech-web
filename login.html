@@ -21,7 +21,8 @@
       <nav class="nav">
         <a href="shop.html">Shop</a
         ><a href="index.html#categories">Categories</a
-        ><a href="index.html#discover">Discover</a>
+        ><a href="index.html#discover">Discover</a
+        ><a href="about.html">About</a>
       </nav>
       <a class="logo" href="index.html">NOVA<i>TECH</i></a>
       <div class="actions">
@@ -38,8 +39,12 @@
     </section>
     <main class="auth-wrap">
       <div class="auth-tabs" role="tablist">
-        <button class="auth-tab active" data-tab="login" type="button">Sign in</button>
-        <button class="auth-tab" data-tab="register" type="button">Create account</button>
+        <button class="auth-tab active" data-tab="login" type="button">
+          Sign in
+        </button>
+        <button class="auth-tab" data-tab="register" type="button">
+          Create account
+        </button>
       </div>
 
       <section class="auth-panel active" id="panel-login">
@@ -50,11 +55,23 @@
           <form id="loginForm">
             <div class="field">
               <label for="email">Email address</label>
-              <input id="email" type="email" required placeholder="you@example.com" autocomplete="email" />
+              <input
+                id="email"
+                type="email"
+                required
+                placeholder="you@example.com"
+                autocomplete="email"
+              />
             </div>
             <div class="field">
               <label for="password">Password</label>
-              <input id="password" type="password" required placeholder="••••••••" autocomplete="current-password" />
+              <input
+                id="password"
+                type="password"
+                required
+                placeholder="••••••••"
+                autocomplete="current-password"
+              />
             </div>
             <div class="auth-actions">
               <button class="button" type="submit">Sign in →</button>
@@ -62,7 +79,10 @@
           </form>
           <div class="auth-hint">
             <b>Admin demo:</b> admin@novatech.com / admin123<br />
-            New here? <a href="login.html?tab=register" class="auth-link">Create an account</a>
+            New here?
+            <a href="login.html?tab=register" class="auth-link"
+              >Create an account</a
+            >
           </div>
         </div>
       </section>
@@ -70,31 +90,57 @@
       <section class="auth-panel" id="panel-register">
         <div class="auth-card">
           <h2>Create account</h2>
-          <p class="sub">Join NovaTech for faster checkout and order tracking.</p>
+          <p class="sub">
+            Join NovaTech for faster checkout and order tracking.
+          </p>
           <div class="auth-error" id="regError"></div>
           <form id="registerForm">
             <div class="field">
               <label for="regName">Full name</label>
-              <input id="regName" required placeholder="Alex Morgan" autocomplete="name" />
+              <input
+                id="regName"
+                required
+                placeholder="Alex Morgan"
+                autocomplete="name"
+              />
             </div>
             <div class="field">
               <label for="regEmail">Email address</label>
-              <input id="regEmail" type="email" required placeholder="you@example.com" autocomplete="email" />
+              <input
+                id="regEmail"
+                type="email"
+                required
+                placeholder="you@example.com"
+                autocomplete="email"
+              />
             </div>
             <div class="field">
               <label for="regPassword">Password</label>
-              <input id="regPassword" type="password" required placeholder="At least 6 characters" autocomplete="new-password" />
+              <input
+                id="regPassword"
+                type="password"
+                required
+                placeholder="At least 6 characters"
+                autocomplete="new-password"
+              />
             </div>
             <div class="field">
               <label for="regConfirm">Confirm password</label>
-              <input id="regConfirm" type="password" required placeholder="Repeat password" autocomplete="new-password" />
+              <input
+                id="regConfirm"
+                type="password"
+                required
+                placeholder="Repeat password"
+                autocomplete="new-password"
+              />
             </div>
             <div class="auth-actions">
               <button class="button" type="submit">Create account →</button>
             </div>
           </form>
           <div class="auth-hint">
-            Already have an account? <a href="login.html" class="auth-link">Sign in</a>
+            Already have an account?
+            <a href="login.html" class="auth-link">Sign in</a>
           </div>
         </div>
       </section>
@@ -123,7 +169,11 @@
         document.querySelectorAll(".auth-panel").forEach(function (p) {
           p.classList.toggle("active", p.id === "panel-" + name);
         });
-        history.replaceState(null, "", name === "register" ? "login.html?tab=register" : "login.html");
+        history.replaceState(
+          null,
+          "",
+          name === "register" ? "login.html?tab=register" : "login.html",
+        );
       }
       var initial = new URLSearchParams(location.search).get("tab");
       if (initial === "register") setTab("register");

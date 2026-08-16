@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="src/features.css" />
   </head>
   <body>
-    <div class="notice">
-      Free delivery on orders over $50 · 1 year warranty
-    </div>
+    <div class="notice">Free delivery on orders over $50 · 1 year warranty</div>
     <header class="wrap top">
       <button
         class="menu-toggle"
@@ -23,7 +21,8 @@
       <nav class="nav">
         <a href="shop.html">Shop</a
         ><a href="index.html#categories">Categories</a
-        ><a href="index.html#discover">Discover</a>
+        ><a href="index.html#discover">Discover</a
+        ><a href="about.html">About</a>
       </nav>
       <a class="logo" href="index.html">NOVA<i>TECH</i></a>
       <div class="actions">
@@ -64,8 +63,12 @@
       </aside>
       <section class="form" data-reveal="right">
         <div class="support-tabs" role="tablist">
-          <button class="support-tab active" data-sp="help" type="button">Contact support</button>
-          <button class="support-tab" data-sp="sell" type="button">Sell your gear</button>
+          <button class="support-tab active" data-sp="help" type="button">
+            Contact support
+          </button>
+          <button class="support-tab" data-sp="sell" type="button">
+            Sell your gear
+          </button>
         </div>
 
         <!-- Help panel -->
@@ -124,12 +127,21 @@
               </div>
               <div class="field">
                 <label for="sEmail">Email address</label>
-                <input id="sEmail" type="email" required placeholder="you@example.com" />
+                <input
+                  id="sEmail"
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                />
               </div>
             </div>
             <div class="field">
               <label for="sTitle">Product name</label>
-              <input id="sTitle" required placeholder="e.g. ASUS ROG Strix G15 (2023)" />
+              <input
+                id="sTitle"
+                required
+                placeholder="e.g. ASUS ROG Strix G15 (2023)"
+              />
             </div>
             <div class="form-row">
               <div class="field">
@@ -143,7 +155,14 @@
               </div>
               <div class="field">
                 <label for="sPrice">Price (USD)</label>
-                <input id="sPrice" type="number" min="1" step="0.01" required placeholder="499.00" />
+                <input
+                  id="sPrice"
+                  type="number"
+                  min="1"
+                  step="0.01"
+                  required
+                  placeholder="499.00"
+                />
               </div>
             </div>
             <div class="field">
@@ -167,15 +186,17 @@
               <label>Photo (optional)</label>
               <div class="listing-image-row">
                 <img class="listing-preview" id="sPreview" alt="Preview" />
-                <button class="listing-pick" type="button" id="sPick">Choose image</button>
+                <button class="listing-pick" type="button" id="sPick">
+                  Choose image
+                </button>
               </div>
             </div>
             <button class="button" type="submit">Submit listing →</button>
             <div class="listing-note">
               <b>How it works:</b> your listing appears instantly in the
               Community marketplace on the shop page for everyone to see. When
-              an admin approves it, it’s also promoted to the main store
-              catalog with a “Community” badge.
+              an admin approves it, it’s also promoted to the main store catalog
+              with a “Community” badge.
             </div>
           </form>
 
@@ -223,7 +244,9 @@
         var tabs = Array.from(document.querySelectorAll(".support-tab"));
         tabs.forEach(function (tab) {
           tab.addEventListener("click", function () {
-            tabs.forEach(function (t) { t.classList.toggle("active", t === tab); });
+            tabs.forEach(function (t) {
+              t.classList.toggle("active", t === tab);
+            });
             document.querySelectorAll(".support-panel").forEach(function (p) {
               p.classList.toggle("active", p.id === "sp-" + tab.dataset.sp);
             });
@@ -246,11 +269,13 @@
             name: document.getElementById("fullName").value.trim(),
             email: document.getElementById("email").value.trim(),
             topic: document.getElementById("topic").value,
-            message: document.getElementById("note").value.trim()
+            message: document.getElementById("note").value.trim(),
           });
           sent.style.display = "block";
           f.reset();
-          NT.toast("Request sent — our team will reply within one business day.");
+          NT.toast(
+            "Request sent — our team will reply within one business day.",
+          );
         });
 
         /* ---------- listing image upload ---------- */
@@ -260,12 +285,20 @@
         fileInput.style.display = "none";
         document.body.appendChild(fileInput);
         var listingImage = "";
-        document.getElementById("sPick").addEventListener("click", function () { fileInput.click(); });
+        document.getElementById("sPick").addEventListener("click", function () {
+          fileInput.click();
+        });
         fileInput.addEventListener("change", function () {
           var file = fileInput.files && fileInput.files[0];
           if (!file) return;
-          if (!/^image\//.test(file.type)) { NT.toast("Please choose an image file."); return; }
-          if (file.size > 2 * 1024 * 1024) { NT.toast("Image must be under 2MB."); return; }
+          if (!/^image\//.test(file.type)) {
+            NT.toast("Please choose an image file.");
+            return;
+          }
+          if (file.size > 2 * 1024 * 1024) {
+            NT.toast("Image must be under 2MB.");
+            return;
+          }
           var reader = new FileReader();
           reader.onload = function (ev) {
             listingImage = ev.target.result;
@@ -277,55 +310,84 @@
         });
 
         /* ---------- sell form ---------- */
-        document.getElementById("sellForm").addEventListener("submit", function (e) {
-          e.preventDefault();
-          var name = document.getElementById("sName").value.trim();
-          var email = document.getElementById("sEmail").value.trim();
-          var title = document.getElementById("sTitle").value.trim();
-          var price = Number(document.getElementById("sPrice").value);
-          if (!name || !email || !title || isNaN(price) || price <= 0) {
-            NT.toast("Please fill in name, email, product name, and a valid price.");
-            return;
-          }
-          NT.addListing({
-            userId: user ? user.id : null,
-            seller: name,
-            email: email,
-            name: title,
-            category: document.getElementById("sCategory").value,
-            price: price,
-            condition: document.getElementById("sCondition").value,
-            description: document.getElementById("sDescription").value.trim(),
-            image: listingImage
+        document
+          .getElementById("sellForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            var name = document.getElementById("sName").value.trim();
+            var email = document.getElementById("sEmail").value.trim();
+            var title = document.getElementById("sTitle").value.trim();
+            var price = Number(document.getElementById("sPrice").value);
+            if (!name || !email || !title || isNaN(price) || price <= 0) {
+              NT.toast(
+                "Please fill in name, email, product name, and a valid price.",
+              );
+              return;
+            }
+            NT.addListing({
+              userId: user ? user.id : null,
+              seller: name,
+              email: email,
+              name: title,
+              category: document.getElementById("sCategory").value,
+              price: price,
+              condition: document.getElementById("sCondition").value,
+              description: document.getElementById("sDescription").value.trim(),
+              image: listingImage,
+            });
+            NT.toast("Listing submitted — our team will review it shortly.");
+            document.getElementById("sellForm").reset();
+            listingImage = "";
+            document.getElementById("sPreview").classList.remove("show");
+            if (user) {
+              document.getElementById("sName").value = user.name;
+              document.getElementById("sEmail").value = user.email;
+            }
+            renderMyListings();
           });
-          NT.toast("Listing submitted — our team will review it shortly.");
-          document.getElementById("sellForm").reset();
-          listingImage = "";
-          document.getElementById("sPreview").classList.remove("show");
-          if (user) {
-            document.getElementById("sName").value = user.name;
-            document.getElementById("sEmail").value = user.email;
-          }
-          renderMyListings();
-        });
 
         /* ---------- my listings ---------- */
         function renderMyListings() {
           var body = document.getElementById("myListingsBody");
-          var mine = NT.listings().filter(function (l) {
-            return user ? l.userId === user.id : l.email.toLowerCase() === String(document.getElementById("sEmail").value).trim().toLowerCase();
-          }).slice().reverse();
+          var mine = NT.listings()
+            .filter(function (l) {
+              return user
+                ? l.userId === user.id
+                : l.email.toLowerCase() ===
+                    String(document.getElementById("sEmail").value)
+                      .trim()
+                      .toLowerCase();
+            })
+            .slice()
+            .reverse();
           if (!mine.length) {
-            body.innerHTML = '<div class="empty">You haven’t listed anything yet.</div>';
+            body.innerHTML =
+              '<div class="empty">You haven’t listed anything yet.</div>';
             return;
           }
-          body.innerHTML = mine.map(function (l) {
-            return '<div class="own-listing">' +
-              '<div><div class="own-name">' + NT.sanitize(l.name) + "</div>" +
-              '<div class="own-meta">' + NT.formatPrice(l.price) + " · " + NT.sanitize(l.condition) + " · " + NT.dateFmt(l.date) + "</div></div>" +
-              '<span class="own-badge ' + NT.sanitize(l.status) + '">' + NT.sanitize(l.status) + "</span>" +
-            "</div>";
-          }).join("");
+          body.innerHTML = mine
+            .map(function (l) {
+              return (
+                '<div class="own-listing">' +
+                '<div><div class="own-name">' +
+                NT.sanitize(l.name) +
+                "</div>" +
+                '<div class="own-meta">' +
+                NT.formatPrice(l.price) +
+                " · " +
+                NT.sanitize(l.condition) +
+                " · " +
+                NT.dateFmt(l.date) +
+                "</div></div>" +
+                '<span class="own-badge ' +
+                NT.sanitize(l.status) +
+                '">' +
+                NT.sanitize(l.status) +
+                "</span>" +
+                "</div>"
+              );
+            })
+            .join("");
         }
         renderMyListings();
         NT.on("listings", renderMyListings);

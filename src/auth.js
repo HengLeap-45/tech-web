@@ -5,7 +5,11 @@
 (function () {
   "use strict";
 
-  var ADMIN = { name: "Heng Admin", email: "Vannazuro375@gmail.com", password: "heng123" };
+  var ADMIN = {
+    name: "Heng Admin",
+    email: "Vannazuro375@gmail.com",
+    password: "heng123",
+  };
 
   function ensureAdmin() {
     var users = NT.users();
@@ -28,12 +32,17 @@
         var error = document.getElementById("error");
         var user = NT.findUser(email.value);
         if (!user || user.password !== password.value) {
-          if (error) { error.textContent = "Invalid email or password."; error.style.display = "block"; }
+          if (error) {
+            error.textContent = "Invalid email or password.";
+            error.style.display = "block";
+          }
           return;
         }
         NT.setSession(user.id);
         NT.toast("Welcome back, " + user.name.split(" ")[0] + "!");
-        var redirect = new URLSearchParams(location.search).get("next") || (user.role === "admin" ? "admin.html" : "account.html");
+        var redirect =
+          new URLSearchParams(location.search).get("next") ||
+          (user.role === "admin" ? "admin.html" : "account.html");
         location.href = redirect;
       });
     }
@@ -47,7 +56,12 @@
         var confirm = document.getElementById("regConfirm");
         var error = document.getElementById("regError");
 
-        function fail(msg) { if (error) { error.textContent = msg; error.style.display = "block"; } }
+        function fail(msg) {
+          if (error) {
+            error.textContent = msg;
+            error.style.display = "block";
+          }
+        }
 
         if (!name.value.trim() || !email.value.trim() || !password.value) {
           fail("Please fill in all fields.");
@@ -70,10 +84,16 @@
           return;
         }
 
-        var user = NT.createUser(name.value.trim(), email.value.trim(), password.value, "customer");
+        var user = NT.createUser(
+          name.value.trim(),
+          email.value.trim(),
+          password.value,
+          "customer",
+        );
         NT.setSession(user.id);
         NT.toast("Account created. Welcome, " + user.name.split(" ")[0] + "!");
-        location.href = new URLSearchParams(location.search).get("next") || "account.html";
+        location.href =
+          new URLSearchParams(location.search).get("next") || "account.html";
       });
     }
   }

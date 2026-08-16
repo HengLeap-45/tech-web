@@ -21,7 +21,8 @@
       <nav class="nav">
         <a href="shop.html">Shop</a
         ><a href="index.html#categories">Categories</a
-        ><a href="index.html#discover">Discover</a>
+        ><a href="index.html#discover">Discover</a
+        ><a href="about.html">About</a>
       </nav>
       <a class="logo" href="index.html">NOVA<i>TECH</i></a>
       <div class="actions">
@@ -65,24 +66,43 @@
           return;
         }
 
-        var initials = user.name.split(/\s+/).map(function (w) { return w[0]; }).slice(0, 2).join("").toUpperCase();
+        var initials = user.name
+          .split(/\s+/)
+          .map(function (w) {
+            return w[0];
+          })
+          .slice(0, 2)
+          .join("")
+          .toUpperCase();
         var role = user.role === "admin" ? "Administrator" : "Customer";
         var avatarHtml = user.avatar
-          ? '<img class="dash-avatar" src="' + user.avatar + '" alt="' + NT.sanitize(user.name) + '">'
+          ? '<img class="dash-avatar" src="' +
+            user.avatar +
+            '" alt="' +
+            NT.sanitize(user.name) +
+            '">'
           : '<div class="dash-avatar">' + initials + "</div>";
 
         document.getElementById("profileSide").innerHTML =
           avatarHtml +
           '<button type="button" class="dash-upload" data-pick>Upload picture</button>' +
-          "<h3>" + NT.sanitize(user.name) + "</h3>" +
-          '<div class="dash-role">' + role + "</div>" +
-          "<p>" + NT.sanitize(user.email) + "</p>" +
+          "<h3>" +
+          NT.sanitize(user.name) +
+          "</h3>" +
+          '<div class="dash-role">' +
+          role +
+          "</div>" +
+          "<p>" +
+          NT.sanitize(user.email) +
+          "</p>" +
           '<div class="dash-menu">' +
-            '<a href="shop.html">Browse products</a>' +
-            '<a href="cart.html">View bag</a>' +
-            '<a href="contact.html">Contact support</a>' +
-            (user.role === "admin" ? '<a href="admin.html">Admin panel →</a>' : "") +
-            '<a href="#" class="buy-btn" data-logout>Sign out</a>' +
+          '<a href="shop.html">Browse products</a>' +
+          '<a href="cart.html">View bag</a>' +
+          '<a href="contact.html">Contact support</a>' +
+          (user.role === "admin"
+            ? '<a href="admin.html">Admin panel →</a>'
+            : "") +
+          '<a href="#" class="buy-btn" data-logout>Sign out</a>' +
           "</div>";
 
         var fileInput = document.createElement("input");
@@ -91,9 +111,12 @@
         fileInput.style.display = "none";
         document.getElementById("profileSide").appendChild(fileInput);
 
-        document.getElementById("profileSide").querySelector("[data-pick]").addEventListener("click", function () {
-          fileInput.click();
-        });
+        document
+          .getElementById("profileSide")
+          .querySelector("[data-pick]")
+          .addEventListener("click", function () {
+            fileInput.click();
+          });
 
         fileInput.addEventListener("change", function () {
           var file = fileInput.files && fileInput.files[0];
@@ -115,43 +138,79 @@
           reader.readAsDataURL(file);
         });
 
-        document.getElementById("profileSide").querySelector("[data-logout]").addEventListener("click", function (e) {
-          e.preventDefault();
-          NT.clearSession();
-          NT.toast("Signed out. See you soon!");
-          location.href = "index.html";
-        });
+        document
+          .getElementById("profileSide")
+          .querySelector("[data-logout]")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            NT.clearSession();
+            NT.toast("Signed out. See you soon!");
+            location.href = "index.html";
+          });
 
         var orders = NT.ordersForUser(user.id);
-        var totalSpent = orders.reduce(function (sum, o) { return sum + o.total; }, 0);
+        var totalSpent = orders.reduce(function (sum, o) {
+          return sum + o.total;
+        }, 0);
         var inProgress = orders.filter(function (o) {
           var s = String(o.status || "").toLowerCase();
           return s === "processing" || s === "shipped";
         }).length;
 
         document.getElementById("statCards").innerHTML =
-          card(orders.length, "Orders") + card(inProgress, "In progress") + card("$" + totalSpent.toLocaleString("en-US"), "Total spent");
+          card(orders.length, "Orders") +
+          card(inProgress, "In progress") +
+          card("$" + totalSpent.toLocaleString("en-US"), "Total spent");
 
         function card(value, label) {
-          return '<div class="stat-card"><b>' + value + "</b><span>" + label + "</span></div>";
+          return (
+            '<div class="stat-card"><b>' +
+            value +
+            "</b><span>" +
+            label +
+            "</span></div>"
+          );
         }
 
         var orderList = document.getElementById("orderList");
         if (!orders.length) {
-          orderList.innerHTML = '<div class="empty">No orders yet. Start with something great.</div><div style="margin-top:14px"><a class="button" href="shop.html">Shop now →</a></div>';
+          orderList.innerHTML =
+            '<div class="empty">No orders yet. Start with something great.</div><div style="margin-top:14px"><a class="button" href="shop.html">Shop now →</a></div>';
         } else {
-          orderList.innerHTML = orders.slice().reverse().map(function (o) {
-            var lines = o.items.map(function (i) { return NT.sanitize(i.name) + " × " + i.qty; }).join(" · ");
-            var statusClass = String(o.status || "").toLowerCase();
-            return '<div class="order-card">' +
-              '<div class="order-head">' +
-                '<span><span class="order-id">' + NT.sanitize(o.id) + "</span> &nbsp;·&nbsp; <span class=\"order-date\">" + NT.dateFmt(o.date) + "</span></span>" +
-                '<span class="order-status ' + statusClass + '">' + NT.sanitize(o.status) + "</span>" +
-              "</div>" +
-              '<div class="order-lines">' + lines + "</div>" +
-              '<div class="order-total">Total: <b>' + NT.formatPrice(o.total) + "</b></div>" +
-            "</div>";
-          }).join("");
+          orderList.innerHTML = orders
+            .slice()
+            .reverse()
+            .map(function (o) {
+              var lines = o.items
+                .map(function (i) {
+                  return NT.sanitize(i.name) + " × " + i.qty;
+                })
+                .join(" · ");
+              var statusClass = String(o.status || "").toLowerCase();
+              return (
+                '<div class="order-card">' +
+                '<div class="order-head">' +
+                '<span><span class="order-id">' +
+                NT.sanitize(o.id) +
+                '</span> &nbsp;·&nbsp; <span class="order-date">' +
+                NT.dateFmt(o.date) +
+                "</span></span>" +
+                '<span class="order-status ' +
+                statusClass +
+                '">' +
+                NT.sanitize(o.status) +
+                "</span>" +
+                "</div>" +
+                '<div class="order-lines">' +
+                lines +
+                "</div>" +
+                '<div class="order-total">Total: <b>' +
+                NT.formatPrice(o.total) +
+                "</b></div>" +
+                "</div>"
+              );
+            })
+            .join("");
         }
       });
     </script>

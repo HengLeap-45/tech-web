@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="src/features.css" />
   </head>
   <body>
-    <div class="notice">
-      Free delivery on orders over $50 · 1 year warranty
-    </div>
+    <div class="notice">Free delivery on orders over $50 · 1 year warranty</div>
     <header class="wrap top">
       <button
         class="menu-toggle"
@@ -23,12 +21,15 @@
       <nav class="nav">
         <a href="shop.html">Shop</a
         ><a href="index.html#categories">Categories</a
-        ><a href="index.html#discover">Discover</a>
+        ><a href="index.html#discover">Discover</a
+        ><a href="about.html">About</a>
       </nav>
       <a class="logo" href="index.html">NOVA<i>TECH</i></a>
       <div class="actions">
         <a href="contact.html">Support</a
-        ><a class="bag" href="cart.html">Bag <span class="bubble" id="bag">0</span></a>
+        ><a class="bag" href="cart.html"
+          >Bag <span class="bubble" id="bag">0</span></a
+        >
       </div>
     </header>
     <main class="wrap">
@@ -111,11 +112,13 @@
     <script src="src/reveal.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        var productId = Number(new URLSearchParams(location.search).get("id")) || 1;
+        var productId =
+          Number(new URLSearchParams(location.search).get("id")) || 1;
         var product = NT.getProduct(productId);
         if (!product) {
           document.getElementById("name").textContent = "Product not found";
-          document.getElementById("description").textContent = "This product may have been removed by the store admin.";
+          document.getElementById("description").textContent =
+            "This product may have been removed by the store admin.";
           document.getElementById("add").disabled = true;
           return;
         }
@@ -125,15 +128,28 @@
         document.getElementById("name").textContent = product.name;
         document.getElementById("image").src = product.image;
         document.getElementById("image").alt = product.name;
-        document.getElementById("price").textContent = NT.formatPrice(product.price);
-        document.getElementById("description").textContent = product.description;
-        document.getElementById("categoryLine").textContent = product.category + " / Featured";
-        document.getElementById("ratingLine").textContent = "★★★★★ &nbsp; " + (product.rating || "4.5") + " / " + (product.reviews || 0) + " reviews";
+        document.getElementById("price").textContent = NT.formatPrice(
+          product.price,
+        );
+        document.getElementById("description").textContent =
+          product.description;
+        document.getElementById("categoryLine").textContent =
+          product.category + " / Featured";
+        document.getElementById("ratingLine").textContent =
+          "★★★★★ &nbsp; " +
+          (product.rating || "4.5") +
+          " / " +
+          (product.reviews || 0) +
+          " reviews";
 
         var q = 1;
         var qtyEl = document.getElementById("qty");
-        document.getElementById("plus").onclick = function () { qtyEl.textContent = ++q; };
-        document.getElementById("minus").onclick = function () { qtyEl.textContent = q = Math.max(1, q - 1); };
+        document.getElementById("plus").onclick = function () {
+          qtyEl.textContent = ++q;
+        };
+        document.getElementById("minus").onclick = function () {
+          qtyEl.textContent = q = Math.max(1, q - 1);
+        };
 
         document.querySelectorAll(".chip").forEach(function (chip) {
           chip.onclick = function () {
@@ -147,12 +163,17 @@
           NT.cartAdd(product.id, q);
           NT.toast(product.name + " added to bag (" + q + "×)");
           addBtn.textContent = "Added to bag ✓";
-          setTimeout(function () { addBtn.textContent = "Add to bag — " + NT.formatPrice(product.price); }, 1600);
+          setTimeout(function () {
+            addBtn.textContent =
+              "Add to bag — " + NT.formatPrice(product.price);
+          }, 1600);
         };
 
         // Related products (same category, then any others)
         var related = NT.products()
-          .filter(function (p) { return p.id !== product.id; })
+          .filter(function (p) {
+            return p.id !== product.id;
+          })
           .sort(function (a, b) {
             var aMatch = a.category === product.category ? 0 : 1;
             var bMatch = b.category === product.category ? 0 : 1;
